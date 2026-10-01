@@ -7,6 +7,7 @@ autogenerate migrasi pada Alembic maupun penggunaan di aplikasi.
 
 from app.db.database import Base
 from app.models.category import Category
+from app.models.customer import Customer
 from app.models.merchant import Merchant
 from app.models.product import Product
 from app.models.user import User
@@ -14,6 +15,7 @@ from app.models.user import User
 __all__ = [
     "Base",
     "Category",
+    "Customer",
     "Merchant",
     "Product",
     "User",
