@@ -1,17 +1,63 @@
-# smartpos_green_ai
+# SmartPOS Green AI
 
-A new Flutter project.
+> **"From Transactions to Business Intelligence"**  
+> *AI-Powered Business Operating System untuk Mendukung Digitalisasi dan Pertumbuhan UMKM Berkelanjutan*
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Tentang SmartPOS Green AI
 
-A few resources to get you started if this is your first Flutter project:
+**SmartPOS Green AI** adalah platform *Point of Sale* (POS) yang dikembangkan untuk mendukung digitalisasi serta pertumbuhan usaha mikro, kecil, dan menengah (UMKM) secara berkelanjutan. Platform ini dirancang untuk mentransformasikan data transaksi operasional harian menjadi wawasan kecerdasan bisnis yang terarah.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Konsep Alur Utama
+
+SmartPOS Green AI menghubungkan data operasional menuju pertumbuhan bisnis berkelanjutan melalui alur sistematis berikut:
+
+```text
+Operational Data
+       ↓
+AI Business Engine
+       ↓
+Business Intelligence
+       ↓
+Business Decision
+       ↓
+Growth & Sustainability
+```
+
+---
+
+## Core Values
+
+- **Data Collection**: Mengumpulkan dan mengelola data transaksi operasional harian UMKM secara terstruktur dan terintegrasi.
+- **AI Business Engine**: Mengolah dan menganalisis pola operasional bisnis melalui pemrosesan cerdas.
+- **Business Intelligence**: Menghasilkan informasi dan analisis bisnis yang bermakna bagi pelaku usaha.
+- **Business Growth**: Mendukung pengambilan keputusan berbasis data demi akselerasi dan keberlanjutan bisnis UMKM.
+
+---
+
+## Technology Stack
+
+### Mobile Application
+- **Framework**: Flutter
+- **Language**: Dart
+- **State Management**: Riverpod
+- **Routing**: GoRouter
+- **HTTP Client**: Dio
+- **Local Database**: Drift + SQLite
+- **Secure Storage**: Flutter Secure Storage
+
+### Backend & Database
+- **Language**: Python
+- **Framework**: FastAPI
+- **ORM**: SQLAlchemy
+- **Database**: PostgreSQL
+- **Migration Tool**: Alembic
+
+---
+
+## Status Project
+
+Project ini saat ini masih dalam tahap **Active Development**.
