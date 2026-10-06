@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import (
     Boolean,
@@ -20,6 +20,7 @@ from app.db.database import Base
 if TYPE_CHECKING:
     from app.models.category import Category
     from app.models.merchant import Merchant
+    from app.models.transaction_item import TransactionItem
 
 
 class Product(Base):
@@ -115,6 +116,12 @@ class Product(Base):
     category: Mapped["Category"] = relationship(
         "Category",
         back_populates="products",
+    )
+
+    # Relationship ke TransactionItem (satu produk dapat muncul di banyak item transaksi)
+    transaction_items: Mapped[List["TransactionItem"]] = relationship(
+        "TransactionItem",
+        back_populates="product",
     )
 
     def __repr__(self) -> str:

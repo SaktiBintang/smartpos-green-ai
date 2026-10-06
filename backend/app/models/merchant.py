@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from app.models.category import Category
     from app.models.customer import Customer
     from app.models.product import Product
+    from app.models.transaction import Transaction
     from app.models.user import User
 
 
@@ -86,6 +87,13 @@ class Merchant(Base):
     # Relationship ke Customer (dua arah)
     customers: Mapped[List["Customer"]] = relationship(
         "Customer",
+        back_populates="merchant",
+        cascade="all, delete-orphan",
+    )
+
+    # Relationship ke Transaction (dua arah)
+    transactions: Mapped[List["Transaction"]] = relationship(
+        "Transaction",
         back_populates="merchant",
         cascade="all, delete-orphan",
     )

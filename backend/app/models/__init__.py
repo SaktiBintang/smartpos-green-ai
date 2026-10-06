@@ -10,6 +10,8 @@ from app.models.category import Category
 from app.models.customer import Customer
 from app.models.merchant import Merchant
 from app.models.product import Product
+from app.models.transaction import Transaction
+from app.models.transaction_item import TransactionItem
 from app.models.user import User
 
 __all__ = [
@@ -18,5 +20,7 @@ __all__ = [
     "Customer",
     "Merchant",
     "Product",
+    "Transaction",
+    "TransactionItem",
     "User",
 ]

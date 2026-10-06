@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 from sqlalchemy import (
     Boolean,
@@ -18,6 +18,7 @@ from app.db.database import Base
 
 if TYPE_CHECKING:
     from app.models.merchant import Merchant
+    from app.models.transaction import Transaction
 
 
 class Customer(Base):
@@ -97,6 +98,12 @@ class Customer(Base):
     merchant: Mapped["Merchant"] = relationship(
         "Merchant",
         back_populates="customers",
+    )
+
+    # Relationship ke Transaction (dua arah)
+    transactions: Mapped[List["Transaction"]] = relationship(
+        "Transaction",
+        back_populates="customer",
     )
 
     def __repr__(self) -> str:
