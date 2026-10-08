@@ -1,4 +1,4 @@
-import uuid
+﻿import uuid
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, List, Optional
 
@@ -11,6 +11,7 @@ from app.db.database import Base
 if TYPE_CHECKING:
     from app.models.category import Category
     from app.models.customer import Customer
+    from app.models.inventory_movement import InventoryMovement
     from app.models.product import Product
     from app.models.transaction import Transaction
     from app.models.user import User
@@ -27,26 +28,31 @@ class Merchant(Base):
         default=uuid.uuid4,
         comment="Primary key UUID merchant",
     )
+
     name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
         comment="Nama merchant",
     )
+
     business_type: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
         comment="Jenis usaha merchant",
     )
+
     phone: Mapped[Optional[str]] = mapped_column(
         String(50),
         nullable=True,
         comment="Nomor telepon merchant (opsional)",
     )
+
     address: Mapped[Optional[str]] = mapped_column(
         Text,
         nullable=True,
         comment="Alamat merchant (opsional)",
     )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -54,6 +60,7 @@ class Merchant(Base):
         default=lambda: datetime.now(timezone.utc),
         comment="Timestamp saat merchant dibuat",
     )
+
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -98,5 +105,15 @@ class Merchant(Base):
         cascade="all, delete-orphan",
     )
 
+    # Relationship ke InventoryMovement (dua arah)
+    inventory_movements: Mapped[List["InventoryMovement"]] = relationship(
+        "InventoryMovement",
+        back_populates="merchant",
+        cascade="all, delete-orphan",
+    )
+
     def __repr__(self) -> str:
-        return f"<Merchant(id={self.id}, name={self.name!r}, business_type={self.business_type!r})>"
+        return (
+            f"<Merchant(id={self.id}, name={self.name!r}, "
+            f"business_type={self.business_type!r})>"
+        )

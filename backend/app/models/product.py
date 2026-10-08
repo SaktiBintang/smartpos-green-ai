@@ -1,4 +1,4 @@
-import uuid
+﻿import uuid
 from datetime import datetime, timezone
 from decimal import Decimal
 from typing import TYPE_CHECKING, List
@@ -19,6 +19,7 @@ from app.db.database import Base
 
 if TYPE_CHECKING:
     from app.models.category import Category
+    from app.models.inventory_movement import InventoryMovement
     from app.models.merchant import Merchant
     from app.models.transaction_item import TransactionItem
 
@@ -37,6 +38,7 @@ class Product(Base):
         default=uuid.uuid4,
         comment="Primary key UUID product",
     )
+
     merchant_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("merchants.id", ondelete="CASCADE"),
@@ -44,6 +46,7 @@ class Product(Base):
         index=True,
         comment="Foreign key ke merchants.id",
     )
+
     category_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("categories.id", ondelete="RESTRICT"),
@@ -51,26 +54,31 @@ class Product(Base):
         index=True,
         comment="Foreign key ke categories.id",
     )
+
     name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
         comment="Nama produk",
     )
+
     sku: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
         comment="Stock Keeping Unit produk",
     )
+
     price: Mapped[Decimal] = mapped_column(
         Numeric(14, 2),
         nullable=False,
         comment="Harga jual produk",
     )
+
     cost_price: Mapped[Decimal] = mapped_column(
         Numeric(14, 2),
         nullable=False,
         comment="Harga modal produk",
     )
+
     stock: Mapped[Decimal] = mapped_column(
         Numeric(14, 3),
         nullable=False,
@@ -78,11 +86,13 @@ class Product(Base):
         server_default="0",
         comment="Stok produk saat ini",
     )
+
     unit: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
         comment="Satuan produk, misalnya pcs, kg, liter",
     )
+
     is_active: Mapped[bool] = mapped_column(
         Boolean,
         default=True,
@@ -90,6 +100,7 @@ class Product(Base):
         nullable=False,
         comment="Status aktif produk",
     )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -97,6 +108,7 @@ class Product(Base):
         default=lambda: datetime.now(timezone.utc),
         comment="Timestamp saat produk dibuat",
     )
+
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -124,5 +136,15 @@ class Product(Base):
         back_populates="product",
     )
 
+    # Relationship ke InventoryMovement (dua arah)
+    inventory_movements: Mapped[List["InventoryMovement"]] = relationship(
+        "InventoryMovement",
+        back_populates="product",
+        cascade="all, delete-orphan",
+    )
+
     def __repr__(self) -> str:
-        return f"<Product(id={self.id}, sku={self.sku!r}, name={self.name!r}, merchant_id={self.merchant_id})>"
+        return (
+            f"<Product(id={self.id}, sku={self.sku!r}, "
+            f"name={self.name!r}, merchant_id={self.merchant_id})>"
+        )
