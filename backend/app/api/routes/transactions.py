@@ -1,9 +1,9 @@
-from uuid import UUID
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.core.dependencies import get_current_user
 from app.db.database import get_db
+from app.models.user import User
 from app.schemas.transaction import TransactionCreate
 from app.services.transaction_service import TransactionService
 
@@ -18,22 +18,12 @@ router = APIRouter(
 def create_transaction(
     payload: TransactionCreate,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    # Sementara merchant_id diambil dari header.
-    # Authentication/JWT akan menggantikan mekanisme ini
-    # pada tahap Auth nanti.
-    merchant_id_header = None
-
-    if merchant_id_header is None:
-        raise HTTPException(
-            status_code=401,
-            detail="Merchant authentication belum tersedia.",
-        )
-
     try:
         transaction = TransactionService.create_transaction(
             db=db,
-            merchant_id=UUID(merchant_id_header),
+            merchant_id=current_user.merchant_id,
             transaction_number=payload.transaction_number,
             payment_method=payload.payment_method,
             customer_id=payload.customer_id,
